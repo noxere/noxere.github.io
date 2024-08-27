@@ -25,7 +25,13 @@
 <p>The initial scan shows 2 open ports - SSH on port 22 and Apache2 on port 80. I take a further look into port 80 through my browser.</p>
 <p>The webpage is for a team of bug bounty hunters. I run a gobuster directory scan in the background while continuing to explore the webpages. One interesting page I am able to navigate to is /log_submit.php through the nav bar at the top of the home page, which leads me to a web form that looks to be an exploit database beta test.</p>
 <p>When I input some random data, my input is displayed on the page stating that it would have been added to the database, if it were ready. I fire up BurpSuite to catch this request and take a look.</p>
-
+<p>It appears that a POST request is submitted to /tracker_diRbPr00f314.php. The data in the request appears to be encoded with base64, as well as URL encoding. I use an encoding identifier to confirm this. Next, I forward the request to BurpSuite’s Decoder and decode as URL, then base64, to get the following output:</p>
+<p>The data we input from the POST request appears to be in XML format. With some research into XML exploits, it appears that this could be an entry point for a possible XXE injection. I send the original POST request to BurpSuite’s Repeater, take the following payload to read the /etc/passwd file, encode it as base64 and URL, then replace the data in the request with the encoded output. When I send the request, we get this response:</p>
+<p>Now that I know that the XXE injection works, I require additional enumeration to find the target file. The first gobuster scan yielded no results, so I run a second scan with the ‘-x php’ tag as we know the website runs PHP. The db.php file is discovered.</p>
+<p>As this is a Linux machine running Apache2, the /var/www/html/ path would be a good start to attempt to access this file. In order to extract this file, we must include a PHP filter in our request. We repeat the same process as before, with the new payload, and get this response: 
+(Note: hacktricks.xyz is an extremely helpful resource for a better understanding in all of these areas, it helped me build the payloads used in this machine.)</p>
+<p>As we can see, the response provided some base64 encoded data, I decode this to get the following:</p>
+  
 </article>
 
 
