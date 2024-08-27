@@ -22,7 +22,7 @@
   </header>
   <p>Enumeration</p>
 <p>To begin with, I run an Nmap scan:</p>
-  ![Nmap scan output](/noxere.github.io/assets/Nmap.png)
+  <img src="noxere.github.io/assets/Nmap.png" alt="Nmap scan output" />
 <p>The initial scan shows 2 open ports - SSH on port 22 and Apache2 on port 80. I take a further look into port 80 through my browser.</p>
 <p>The webpage is for a team of bug bounty hunters. I run a gobuster directory scan in the background while continuing to explore the webpages. One interesting page I am able to navigate to is /log_submit.php through the nav bar at the top of the home page, which leads me to a web form that looks to be an exploit database beta test.</p>
 <p>When I input some random data, my input is displayed on the page stating that it would have been added to the database, if it were ready. I fire up BurpSuite to catch this request and take a look.</p>
