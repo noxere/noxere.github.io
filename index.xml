@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Noxere - PenTest Machine Writeups</title>
+    <link>https://noxere.github.io/</link>
+    <description>Recent content on Noxere - PenTest Machine Writeups</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 27 Aug 2024 18:30:25 +0100</lastBuildDate>
+    <atom:link href="https://noxere.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bounty Hunter (HTB)</title>
+      <link>https://noxere.github.io/posts/bounty_hunter/</link>
+      <pubDate>Tue, 27 Aug 2024 18:30:25 +0100</pubDate>
+      <guid>https://noxere.github.io/posts/bounty_hunter/</guid>
+      <description>Enumeration&#xA;To begin with, I run an Nmap scan:&#xA;The initial scan shows 2 open ports - SSH on port 22 and Apache2 on port 80. I take a further look into port 80 through my browser.&#xA;The webpage is for a team of bug bounty hunters. I run a gobuster directory scan in the background while continuing to explore the webpages. One interesting page I am able to navigate to is /log_submit.</description>
+    </item>
+  </channel>
+</rss>
