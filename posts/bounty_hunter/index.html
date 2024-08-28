@@ -55,7 +55,7 @@
 <p>The message refers to an internal tool, which may be useful to us. Some more enumeration reveals an /opt/skytrain_inc/ directory, which contains a python script called ticketValidator.py, as well as another file containing some invalid tickets. ‘Sudo -l’ also tells us that we can run this script as root without needing a password, I will keep this in mind for later.</p>
   <img src="../../assets/sudo.png" alt="Output of sudo -l command" />
 <p>To better understand the script, I use ChatGPT to break it down. The result of this shows me that the use of the `eval()` function may point to a vulnerability. Some important information to note from this script is the validation technique – It checks that the ticket code is divisible by 7 with a remainder of 4 and evaluates to a number greater than 100. </p>
-  
+  <img src="../../assets/ticketcode.png" alt="Ticket code" />
 <p>I need to create a ticket that meets these requirements, which will also grant me a root shell when executed. After some trial and error, I put together the following ticket:</p>
   <img src="../../assets/ticket.png" alt="Amended ticket file" />
 <p>I run the python script, point to the malicious ticket file and now have root access. The root flag is then found in the /root directory.</p>
