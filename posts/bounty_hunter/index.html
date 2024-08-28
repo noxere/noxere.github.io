@@ -40,7 +40,7 @@
 <p>When I send the request, we get this response:</p>
   <img src="../../assets/Burpresponse.png" alt="Burpsuite passwd response" />
 <p>Now that I know that the XXE injection works, I require additional enumeration to find the target file. The first gobuster scan yielded no results, so I run a second scan with the ‘-x php’ tag as we know the website runs PHP. The db.php file is discovered.</p>
-  <img src"../../assets/gobuster.png" alt="Gobuster php file scan result" />
+  <img src="../../assets/gobuster.png" alt="Gobuster php file scan result" />
 <p>As this is a Linux machine running Apache2, the /var/www/html/ path would be a good start to attempt to access this file. In order to extract this file, we must include a PHP filter in our request. We repeat the same process as before, with the new payload, and get this response: 
 (Note: hacktricks.xyz is an extremely helpful resource for a better understanding in all of these areas, it helped me build the payloads used in this machine.)</p>
 <p>As we can see, the response provided some base64 encoded data, I decode this to get the following:</p>
