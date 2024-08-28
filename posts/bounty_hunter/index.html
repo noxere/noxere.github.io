@@ -43,14 +43,23 @@
   <img src="../../assets/gobuster.png" alt="Gobuster php file scan result" />
 <p>As this is a Linux machine running Apache2, the /var/www/html/ path would be a good start to attempt to access this file. In order to extract this file, we must include a PHP filter in our request. We repeat the same process as before, with the new payload, and get this response: 
 (Note: hacktricks.xyz is an extremely helpful resource for a better understanding in all of these areas, it helped me build the payloads used in this machine.)</p>
+  <img src="../../assets/payload2.png" alt="Second payload with php filter" />
+  <img src="../../assets/payload2response.png" alt="Burp response to payload2" />
 <p>As we can see, the response provided some base64 encoded data, I decode this to get the following:</p>
+  <img src="../../assets/decodedresponse.png" alt="Payload response base64 decoded" />
 <p>I appear to have found some credentials, next step is to try and log in with these through SSH. I use the password against all users provided by the /etc/passwd file until we get a successful login with the ‘development’ user. Here we can find the user.txt in /home/development. </p>
+  <img src="../../assets/sshuser.png" alt="ssh to development user" />
   <p><u>Privilege Escalation</u></p>
 <p>In the same directory as the user.txt file, there is a contract.txt file, which contains this message:</p>
-<p>The message refers to an internal tool, which may be useful to us. Some more enumeration reveals an /opt/skytrain_inc/ directory, which contains a python script called ticketValidator.py, as well as another file containing some invalid tickets. ‘Sudo -l’ also tells us that we can run this script as root without needing a password, I will keep this in mind for later.</p> 
+  <img src="../../assets/contract.png" alt="Contents of context.txt file" />
+<p>The message refers to an internal tool, which may be useful to us. Some more enumeration reveals an /opt/skytrain_inc/ directory, which contains a python script called ticketValidator.py, as well as another file containing some invalid tickets. ‘Sudo -l’ also tells us that we can run this script as root without needing a password, I will keep this in mind for later.</p>
+  <img src="../../assets/sudo.png" alt="Output of sudo -l command" />
 <p>To better understand the script, I use ChatGPT to break it down. The result of this shows me that the use of the `eval()` function may point to a vulnerability. Some important information to note from this script is the validation technique – It checks that the ticket code is divisible by 7 with a remainder of 4 and evaluates to a number greater than 100. </p>
+  
 <p>I need to create a ticket that meets these requirements, which will also grant me a root shell when executed. After some trial and error, I put together the following ticket:</p>
+  <img src="../../assets/ticket.png" alt="Amended ticket file" />
 <p>I run the python script, point to the malicious ticket file and now have root access. The root flag is then found in the /root directory.</p>
+  <img src="../../assets/rootshell.png" alt="Root Shell" />
 
   
 </article>
