@@ -29,6 +29,7 @@
   <img src="../../assets/Homepage.png" alt="Website Home Page" />
 <p>The webpage is for a team of bug bounty hunters. I run a gobuster directory scan in the background while continuing to explore the webpages. One interesting page I am able to navigate to is /log_submit.php through the nav bar at the top of the home page, which leads me to a web form that looks to be an exploit database beta test.</p>
   <img src="../../assets/Noinput.png" alt="Bounty Report System Beta - No input" />
+  <img src="../../assets/Input.png" alt="Bounty Report System Beta - With input" />
 <p>When I input some random data, my input is displayed on the page stating that it would have been added to the database, if it were ready. I fire up BurpSuite to catch this request and take a look.</p>
 <p>It appears that a POST request is submitted to /tracker_diRbPr00f314.php. The data in the request appears to be encoded with base64, as well as URL encoding. I use an encoding identifier to confirm this. Next, I forward the request to BurpSuite’s Decoder and decode as URL, then base64, to get the following output:</p>
 <p>The data we input from the POST request appears to be in XML format. With some research into XML exploits, it appears that this could be an entry point for a possible XXE injection. I send the original POST request to BurpSuite’s Repeater, take the following payload to read the /etc/passwd file, encode it as base64 and URL, then replace the data in the request with the encoded output. When I send the request, we get this response:</p>
