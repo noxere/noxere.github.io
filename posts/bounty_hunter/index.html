@@ -27,9 +27,7 @@
 <p>The initial scan shows 2 open ports - SSH on port 22 and Apache2 on port 80. I took a further look into port 80 through my browser.</p>
   <img src="../../assets/Homepage.png" alt="Website Home Page" style="display: block; margin-left: auto; margin-right: auto;" />
 <p>The webpage is for a team of bug bounty hunters. I ran a gobuster directory scan in the background while continuing to explore the webpages. One interesting page I was able to navigate to is /log_submit.php through the nav bar at the top of the home page, which lead me to a web form that looks to be an exploit database beta test.</p>
-  <pre><code class="bash">
-gobuster dir -u https://10.10.11.100/ -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
-</code></pre>
+  <pre><code class="bash">gobuster dir -u https://10.10.11.100/ -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt</code></pre>
   <p align="center">
   <img src="../../assets/Noinput.png" alt="Bounty Report System Beta - No input" style="display: block; margin-left: auto; margin-right: auto;"/>
   <img src="../../assets/Input.png" alt="Bounty Report System Beta - With input" style="display: block; margin-left: auto; margin-right: auto;"/>
@@ -44,9 +42,7 @@ gobuster dir -u https://10.10.11.100/ -w /usr/share/wordlists/seclists/Discovery
 <p>When I sent the request, I got this response:</p>
   <img src="../../assets/Burpresponse.png" alt="Burpsuite passwd response" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>Now that I knew that the XXE injection works, I required additional enumeration to find the target file. The first gobuster scan yielded no results, so I ran a second scan with the ‘-x php’ tag as we know the website runs PHP. The db.php file is discovered.</p>
-  <pre><code class="bash">
-gobuster dir -u https://10.10.11.100/ -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -x php
-</code></pre>
+  <pre><code class="bash">gobuster dir -u https://10.10.11.100/ -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -x php</code></pre>
   <img src="../../assets/gobuster.png" alt="Gobuster php file scan result" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>As this is a Linux machine running Apache2, the /var/www/html/ path would be a good start to attempt to access this file. In order to extract this file, I must include a PHP filter in our request. I repeated the same process as before, with the new payload, and got this response: 
 (Note: <a href="https://book.hacktricks.xyz">hacktricks.xyz</a> is an extremely helpful resource for a better understanding in all of these areas, it helped me build the payloads used in this machine.)</p>
@@ -55,30 +51,22 @@ gobuster dir -u https://10.10.11.100/ -w /usr/share/wordlists/seclists/Discovery
 <p>As we can see, the response provided some base64 encoded data, I decode this to get the following:</p>
   <img src="../../assets/decodedresponse.png" alt="Payload response base64 decoded" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>I appear to have found some credentials, next step is to try and log in with these through SSH. I used the password against all users provided by the /etc/passwd file until I got a successful login with the ‘development’ user. Here I found the user.txt in /home/development. </p>
-  <pre><code class="bash">
-ssh development@10.10.11.100
-password: m19RoAU0hP41A1sTsq6K
-</code></pre>
+  <pre><code class="bash">ssh development@10.10.11.100
+    password: m19RoAU0hP41A1sTsq6K</code></pre>
   <img src="../../assets/sshuser.png" alt="ssh to development user" style="display: block; margin-left: auto; margin-right: auto;"/>
   <p><u>Privilege Escalation</u></p>
 <p>In the same directory as the user.txt file, there is a contract.txt file, which contains this message:</p>
-  <pre><code class="bash">
-cat contract.txt
-</code></pre>
+  <pre><code class="bash">cat contract.txt</code></pre>
   <img src="../../assets/contract.png" alt="Contents of context.txt file" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>The message refers to an internal tool, which may be useful to me. Some more enumeration revealed an /opt/skytrain_inc/ directory, which contains a python script called ticketValidator.py, as well as another file containing some invalid tickets. ‘Sudo -l’ also tells me that we can run this script as root without needing a password, I kept this in mind for later.</p>
-   <pre><code class="bash">
-sudo -l
-</code></pre>
+   <pre><code class="bash">sudo -l</code></pre>
   <img src="../../assets/sudo.png" alt="Output of sudo -l command" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>To better understand the script, I used ChatGPT to break it down. The result of this showed me that the use of the `eval()` function may point to a vulnerability. Some important information to note from this script is the validation technique – It checks that the ticket code is divisible by 7 with a remainder of 4 and evaluates to a number greater than 100. </p>
   <img src="../../assets/ticketcode.png" alt="Ticket code" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>I needed to create a ticket that met these requirements, which will also grant me a root shell when executed. After some trial and error, I put together the following ticket:</p>
   <img src="../../assets/ticket.png" alt="Amended ticket file" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>I ran the python script, pointed to the malicious ticket file and now had root access. The root flag is then found in the /root directory.</p>
-  <pre><code class="bash">
-sudo /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py
-</code></pre>
+  <pre><code class="bash">sudo /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py</code></pre>
   <img src="../../assets/rootshell.png" alt="Root Shell" style="display: block; margin-left: auto; margin-right: auto;"/><br>
 
 <p><u>Resources</u></p>
