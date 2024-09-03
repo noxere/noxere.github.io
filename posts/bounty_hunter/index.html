@@ -22,6 +22,10 @@
   </header>
   <p><u>Enumeration</u></p>
 <p>To begin with, I ran an Nmap scan:</p>
+  <pre><code class="bash">
+# Nmap Scan
+nmap -sSCV -T4 -A -p- 10.10.11.100 -oA nmap.out
+</code></pre>
   <img src="../../assets/Nmap.png" alt="Nmap scan output" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>The initial scan shows 2 open ports - SSH on port 22 and Apache2 on port 80. I took a further look into port 80 through my browser.</p>
   <img src="../../assets/Homepage.png" alt="Website Home Page" style="display: block; margin-left: auto; margin-right: auto;" />
