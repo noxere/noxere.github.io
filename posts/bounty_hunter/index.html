@@ -22,17 +22,13 @@
   </header>
   <p><u>Enumeration</u></p>
 <p>To begin with, I ran an Nmap scan:</p>
-  <p align="center">
-  <img src="../../assets/Nmap.png" alt="Nmap scan output" />
-  </p>
+  <img src="../../assets/Nmap.png" alt="Nmap scan output" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>The initial scan shows 2 open ports - SSH on port 22 and Apache2 on port 80. I took a further look into port 80 through my browser.</p>
-  <p align="center">
-  <img src="../../assets/Homepage.png" alt="Website Home Page" />
-  </p>
+  <img src="../../assets/Homepage.png" alt="Website Home Page" style="display: block; margin-left: auto; margin-right: auto;" />
 <p>The webpage is for a team of bug bounty hunters. I ran a gobuster directory scan in the background while continuing to explore the webpages. One interesting page I was able to navigate to is /log_submit.php through the nav bar at the top of the home page, which lead me to a web form that looks to be an exploit database beta test.</p>
   <p align="center">
-  <img src="../../assets/Noinput.png" alt="Bounty Report System Beta - No input" />
-  <img src="../../assets/Input.png" alt="Bounty Report System Beta - With input" />
+  <img src="../../assets/Noinput.png" alt="Bounty Report System Beta - No input" style="display: block; margin-left: auto; margin-right: auto;"/>
+  <img src="../../assets/Input.png" alt="Bounty Report System Beta - With input" style="display: block; margin-left: auto; margin-right: auto;"/>
   </p>
 <p>When I input some random data, it is displayed on the page stating that it would have been added to the database, if it were ready. I fired up BurpSuite to catch this request and take a look.</p>
   <img src="../../assets/request.png" alt="BurpSuite request" />
