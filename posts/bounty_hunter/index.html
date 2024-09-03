@@ -20,7 +20,7 @@
     <h1>Bounty Hunter (HTB)</h1>
     <time datetime="2024-08-27T18:30:25&#43;01:00">August 27, 2024</time>
   </header>
-  <p><u>Enumeration</u></p>
+  <p><u>**Enumeration**</u></p>
 <p>To begin with, I ran an Nmap scan:</p>
   <pre><code class="bash">nmap -sSCV -T4 -A -p- 10.10.11.100 -oA nmap.out</code></pre>
   <img src="../../assets/Nmap.png" alt="Nmap scan output" style="display: block; margin-left: auto; margin-right: auto;"/>
@@ -54,7 +54,7 @@
   <pre><code class="bash">ssh development@10.10.11.100
     password: m19RoAU0hP41A1sTsq6K</code></pre>
   <img src="../../assets/sshuser.png" alt="ssh to development user" style="display: block; margin-left: auto; margin-right: auto;"/>
-  <p><u>Privilege Escalation</u></p>
+  <p><u>**Privilege Escalation**</u></p>
 <p>In the same directory as the user.txt file, there is a contract.txt file, which contains this message:</p>
   <pre><code class="bash">cat contract.txt</code></pre>
   <img src="../../assets/contract.png" alt="Contents of context.txt file" style="display: block; margin-left: auto; margin-right: auto;"/>
@@ -69,13 +69,13 @@
   <pre><code class="bash">sudo /usr/bin/python3.8 /opt/skytrain_inc/ticketValidator.py</code></pre>
   <img src="../../assets/rootshell.png" alt="Root Shell" style="display: block; margin-left: auto; margin-right: auto;"/><br>
 
-<p><u>Resources</u></p>
+<p><u>**Resources**</u></p>
   <p>
   <a href="https://book.hacktricks.xyz/pentesting-web/xxe-xee-xml-external-entity">https://book.hacktricks.xyz/pentesting-web/xxe-xee-xml-external-entity</a><br>
   <a href="https://portswigger.net/web-security/xxe">https://portswigger.net/web-security/xxe</a>
     </p>
 
-<p><u>Tools</u></p>
+<p><u>**Tools**</u></p>
     <p>
   <a href="https://github.com/nmap/nmap">https://github.com/nmap/nmap</a><br>
   <a href="https://github.com/OJ/gobuster">https://github.com/OJ/gobuster</a><br>
