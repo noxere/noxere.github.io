@@ -23,13 +23,15 @@
   <p><u>Enumeration</u></p>
 <p>To begin with, I ran an Nmap scan:</p>
   <pre><code class="bash">
-# Nmap Scan
 nmap -sSCV -T4 -A -p- 10.10.11.100 -oA nmap.out
 </code></pre>
   <img src="../../assets/Nmap.png" alt="Nmap scan output" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>The initial scan shows 2 open ports - SSH on port 22 and Apache2 on port 80. I took a further look into port 80 through my browser.</p>
   <img src="../../assets/Homepage.png" alt="Website Home Page" style="display: block; margin-left: auto; margin-right: auto;" />
 <p>The webpage is for a team of bug bounty hunters. I ran a gobuster directory scan in the background while continuing to explore the webpages. One interesting page I was able to navigate to is /log_submit.php through the nav bar at the top of the home page, which lead me to a web form that looks to be an exploit database beta test.</p>
+  <pre><code class="bash">
+gobuster dir -u https://10.10.11.100/ -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+</code></pre>
   <p align="center">
   <img src="../../assets/Noinput.png" alt="Bounty Report System Beta - No input" style="display: block; margin-left: auto; margin-right: auto;"/>
   <img src="../../assets/Input.png" alt="Bounty Report System Beta - With input" style="display: block; margin-left: auto; margin-right: auto;"/>
