@@ -53,7 +53,7 @@
 <p>I appear to have found some credentials, next step is to try and log in with these through SSH. I used the password against all users provided by the /etc/passwd file until I got a successful login with the ‘development’ user. Here I found the user.txt in /home/development. </p>
   <pre><code class="bash">ssh development@10.10.11.100
     password: m19RoAU0hP41A1sTsq6K</code></pre>
-  <img src="../../assets/sshuser.png" alt="ssh to development user" style="display: block; margin-left: auto; margin-right: auto;"/>
+  <img src="../../assets/sshuser.png" alt="ssh to development user" style="display: block; margin-left: auto; margin-right: auto;"/><br>
   <p><u>**Privilege Escalation**</u></p>
 <p>In the same directory as the user.txt file, there is a contract.txt file, which contains this message:</p>
   <pre><code class="bash">cat contract.txt</code></pre>
