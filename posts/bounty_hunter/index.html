@@ -58,14 +58,20 @@ gobuster dir -u https://10.10.11.100/ -w /usr/share/wordlists/seclists/Discovery
   <img src="../../assets/decodedresponse.png" alt="Payload response base64 decoded" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>I appear to have found some credentials, next step is to try and log in with these through SSH. I used the password against all users provided by the /etc/passwd file until I got a successful login with the ‘development’ user. Here I found the user.txt in /home/development. </p>
   <pre><code class="bash">
-nssh development@10.10.11.100
-    development@10.10.11.100's password: m19RoAU0hP41A1sTsq6K
+ssh development@10.10.11.100
+password: m19RoAU0hP41A1sTsq6K
 </code></pre>
   <img src="../../assets/sshuser.png" alt="ssh to development user" style="display: block; margin-left: auto; margin-right: auto;"/>
   <p><u>Privilege Escalation</u></p>
 <p>In the same directory as the user.txt file, there is a contract.txt file, which contains this message:</p>
+  <pre><code class="bash">
+cat contract.txt
+</code></pre>
   <img src="../../assets/contract.png" alt="Contents of context.txt file" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>The message refers to an internal tool, which may be useful to me. Some more enumeration revealed an /opt/skytrain_inc/ directory, which contains a python script called ticketValidator.py, as well as another file containing some invalid tickets. ‘Sudo -l’ also tells me that we can run this script as root without needing a password, I kept this in mind for later.</p>
+   <pre><code class="bash">
+sudo -l
+</code></pre>
   <img src="../../assets/sudo.png" alt="Output of sudo -l command" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>To better understand the script, I used ChatGPT to break it down. The result of this showed me that the use of the `eval()` function may point to a vulnerability. Some important information to note from this script is the validation technique – It checks that the ticket code is divisible by 7 with a remainder of 4 and evaluates to a number greater than 100. </p>
   <img src="../../assets/ticketcode.png" alt="Ticket code" style="display: block; margin-left: auto; margin-right: auto;"/>
