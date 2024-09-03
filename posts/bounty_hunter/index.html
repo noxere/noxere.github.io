@@ -42,7 +42,7 @@
 <p>Now that I knew that the XXE injection works, I required additional enumeration to find the target file. The first gobuster scan yielded no results, so I ran a second scan with the ‘-x php’ tag as we know the website runs PHP. The db.php file is discovered.</p>
   <img src="../../assets/gobuster.png" alt="Gobuster php file scan result" />
 <p>As this is a Linux machine running Apache2, the /var/www/html/ path would be a good start to attempt to access this file. In order to extract this file, I must include a PHP filter in our request. I repeated the same process as before, with the new payload, and got this response: 
-(Note: <a href="hacktricks.xyz">hacktricks.xyz</a> is an extremely helpful resource for a better understanding in all of these areas, it helped me build the payloads used in this machine.)</p>
+(Note: <a href="https://book.hacktricks.xyz">hacktricks.xyz</a> is an extremely helpful resource for a better understanding in all of these areas, it helped me build the payloads used in this machine.)</p>
   <img src="../../assets/payload2.png" alt="Second payload with php filter" />
   <img src="../../assets/payload2response.png" alt="Burp response to payload2" />
 <p>As we can see, the response provided some base64 encoded data, I decode this to get the following:</p>
@@ -66,11 +66,11 @@
   <a href="https://portswigger.net/web-security/xxe"</a>
 
 <p><u>Tools</u></p>
-  <a href="https://github.com/nmap/nmap"</a><br>
-  <a href="https://github.com/OJ/gobuster"</a><br>
-  <a href="https://portswigger.net/burp"</a><br>
-  <a href="https://openai.com/chatgpt/"</a><br>
-  <a href="https://base64.guru/tools/character-encoding"</a>
+  <a href="https://github.com/nmap/nmap">github.com/nmap/nmap</a><br>
+  <a href="https://github.com/OJ/gobuster">github.com/OJ/gobuster</a><br>
+  <a href="https://portswigger.net/burp">portswigger.net/burp</a><br>
+  <a href="https://openai.com/chatgpt/">openai.com/chatgpt</a><br>
+  <a href="https://base64.guru/tools/character-encoding">base64.guru/tools/chracter-encoding</a>
   
 </article>
 
