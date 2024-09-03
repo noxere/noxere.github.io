@@ -22,14 +22,18 @@
   </header>
   <p><u>Enumeration</u></p>
 <p>To begin with, I ran an Nmap scan:</p>
-  <p>
+  <p align="center">
   <img src="../../assets/Nmap.png" alt="Nmap scan output" />
   </p>
 <p>The initial scan shows 2 open ports - SSH on port 22 and Apache2 on port 80. I took a further look into port 80 through my browser.</p>
+  <p align="center">
   <img src="../../assets/Homepage.png" alt="Website Home Page" />
+  </p>
 <p>The webpage is for a team of bug bounty hunters. I ran a gobuster directory scan in the background while continuing to explore the webpages. One interesting page I was able to navigate to is /log_submit.php through the nav bar at the top of the home page, which lead me to a web form that looks to be an exploit database beta test.</p>
+  <p align="center">
   <img src="../../assets/Noinput.png" alt="Bounty Report System Beta - No input" />
   <img src="../../assets/Input.png" alt="Bounty Report System Beta - With input" />
+  </p>
 <p>When I input some random data, it is displayed on the page stating that it would have been added to the database, if it were ready. I fired up BurpSuite to catch this request and take a look.</p>
   <img src="../../assets/request.png" alt="BurpSuite request" />
   <img src="../../assets/base64validate.png" alt="base64 validation" />
@@ -62,15 +66,19 @@
   <img src="../../assets/rootshell.png" alt="Root Shell" />
 
 <p><u>Resources</u></p>
+  <p>
   <a href="https://book.hacktricks.xyz/pentesting-web/xxe-xee-xml-external-entity"</a><br>
-  <a href="https://portswigger.net/web-security/xxe"</a><br>
+  <a href="https://portswigger.net/web-security/xxe"</a>
+    </p>
 
 <p><u>Tools</u></p>
+    <p>
   <a href="https://github.com/nmap/nmap">github.com/nmap/nmap</a><br>
   <a href="https://github.com/OJ/gobuster">github.com/OJ/gobuster</a><br>
   <a href="https://portswigger.net/burp">portswigger.net/burp</a><br>
   <a href="https://openai.com/chatgpt/">openai.com/chatgpt</a><br>
-  <a href="https://base64.guru/tools/character-encoding">base64.guru/tools/chracter-encoding</a><br>
+  <a href="https://base64.guru/tools/character-encoding">base64.guru/tools/chracter-encoding</a>
+      </p>
   
 </article>
 
