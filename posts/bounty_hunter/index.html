@@ -39,7 +39,7 @@
   <img src="../../assets/base64validate.png" alt="base64 validation" />
 <p>It appeared that a POST request was submitted to /tracker_diRbPr00f314.php. The data in the request looked to be encoded with base64, as well as URL encoding. I used an encoding identifier to confirm this. Next, I forward the request to BurpSuite’s Decoder and decode as URL, then base64, to get the following output:</p>
   <img src="../../assets/base64.png" alt="First base64 from Burp Decoder" style="display: block; margin-left: auto; margin-right: auto;"/><br>
-  <p><u><strong>Overview</strong></u></p>
+  <p><u><strong>Exploitation</strong></u></p>
 <p>The data I inputted from the POST request is shown to be in XML format. With some research into XML exploits, it appeared that this could be an entry point for a possible XXE injection. I sent the original POST request to BurpSuite’s Repeater, took the following payload to read the /etc/passwd file, encoded it as base64 and URL, then replaced the data in the request with the encoded output.</p>
   <img src="../../assets/payload.png" alt="XXE Payload" style="display: block; margin-left: auto; margin-right: auto;"/>
 <p>When I sent the request, I got this response:</p>
